@@ -204,8 +204,8 @@ kill -9 <pid>
 | Dashboard | 训练详情 |
 |---|---|
 | ![](assets/screenshots/L01-dashboard.png) | ![](assets/screenshots/L03-detail.png) |
-| **AI 教练** | **对话** |
-| ![](assets/screenshots/L04-chat-empty.png) | ![](assets/screenshots/L05-chat-done.png) |
+| **AI 教练** | 
+| ![](assets/screenshots/L04-chat-empty.png) | 
 
 ## 致谢
 
