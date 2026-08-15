@@ -7,14 +7,6 @@
 ![Python](https://img.shields.io/badge/python-3.11%2B-blue)
 ![React](https://img.shields.io/badge/react-18-61dafb)
 
-## 项目愿景
-
-公路车训练的痛点:
-- 训练数据散落在码表 / 心率带 / 功率计里,没人帮你整合
-- 主流码表(TP / Garmin)的算法黑盒,无法定制
-- 缺乏专业的"翻译"——数据怎么变成改进建议
-
-Cycling Coach 想做的是:**一个跑在你电脑上的 AI 教练**,把 FIT 数据自动解读成可执行建议。
 
 ## v0.1.0 — 已实现
 
