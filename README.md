@@ -1,6 +1,6 @@
 # 公路自行车 AI 教练 · Cycling Coach
 
-> 把公路车训练从"经验"升级为"数据 + 智能"。本地优先、苹果毛玻璃风格、minimax M3 驱动。
+> 把公路车训练从"经验"升级为"数据 + 智能"。
 
 ![Version](https://img.shields.io/badge/version-v0.1.0-blue.svg)
 ![Status](https://img.shields.io/badge/status-MVP-yellow.svg)
