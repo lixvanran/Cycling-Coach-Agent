@@ -32,7 +32,6 @@ Cycling Coach 想做的是:**一个跑在你电脑上的 AI 教练**,把 FIT 数
 - [x] **冒烟测试** — `scripts/smoke_test.py` 端到端跑通
 
 ### 前端 (React + Vite + Tailwind)
-- [x] **苹果毛玻璃风格** — 浅色背景 + backdrop-blur 卡片 + 紫蓝渐变
 - [x] **6 个页面** — Dashboard / 训练列表 / 训练详情 / 导入 / 个人画像 / **AI 教练对话**
 - [x] **5 类图表** — 功率曲线 / 心率区间 / 功率-心率-海拔时间图 / 周柱状 / 表格
 - [x] **AI 教练对话** — 用户/AI 气泡、SSE 流式、停止按钮、思考过程折叠、Markdown 渲染
@@ -180,7 +179,6 @@ M3_BASE_URL=https://openrouter.ai/api/v1
 M3_MODEL=minimax/minimax-m3
 ```
 
-**注意**:`minimax-m3` 在 OpenRouter 的 AtlasCloud provider 暂时配错(返回空),系统会自动降级到 `minimax-m2.7`。你也可以直接改用其他模型(`deepseek/deepseek-chat-v3.1` 等都支持)。
 
 ## 常见问题
 
@@ -209,21 +207,6 @@ kill -9 <pid>
 
 或者直接 `停止.bat` / `./stop.sh` 清理。
 
-### AI 报告是假的?
-
-是的,默认 mock 模式,目的是让你无需配 key 就能完整体验。
-要在生产用真实 AI,见「Mock 模式」一节。
-
-## 路线图
-
-- [x] **V0.1.0** — MVP:FIT 解析 + 指标 + AI 报告 + TP 风格 UI + AI 教练对话(M3 + 流式)
-- [ ] V0.2 — ERG 课程生成 + ZWO 导出
-- [ ] V0.3 — 长期追踪(CTL/ATL/TSB)+ Dashboard 趋势
-- [ ] V0.4 — 多轮工具调用(让教练能查训练数据)
-- [ ] V1.0 — TCX/CSV 解析 + 周期化训练规则 + 报告 PDF 导出
-- [ ] V1.1 — 硬件接入(码表 / 心率带 / 功率计)
-- [ ] V1.2 — 比赛实时战术 + 车队协同
-
 ## 截图
 
 | Dashboard | 训练详情 |
@@ -234,10 +217,5 @@ kill -9 <pid>
 
 ## 致谢
 
-- 风格参考:`Photographer-Copilot` / `ZhangXuefeng-Agent`(同作者项目)
-- 训练理论:Andrew Coggan / Stephen Seiler
 - 数据格式:Garmin FIT SDK
 
-## License
-
-MIT
