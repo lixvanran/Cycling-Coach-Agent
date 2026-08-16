@@ -82,9 +82,10 @@ class M3Client:
         temperature: float = 0.7,
         max_tokens: int = 1500,
     ) -> str:
-        """单次同步 chat"""
+        """单次同步 chat — V0.1.2 加 fallback(主模型空响应 → fallback_model)"""
         if self.is_mock:
             return self._mock_response(user)
+        # 1) 先用主模型
         try:
             resp = self._client.chat.completions.create(
                 model=self.model,
@@ -95,7 +96,9 @@ class M3Client:
                 temperature=temperature,
                 max_tokens=max_tokens,
             )
-            return self._extract_content(resp)
+            content = self._extract_content(resp)
+            if content.strip():
+                return content
         except AuthenticationError as e:
             raise M3AuthError(f"M3 API key 无效或被拒绝 (401): {e}") from e
         except RateLimitError as e:
@@ -109,6 +112,24 @@ class M3Client:
             raise M3Error(f"M3 错误 ({status}): {e}") from e
         except Exception as e:
             raise M3Error(f"M3 未知错误: {e}") from e
+
+        # 2) 主模型空响应 → fallback(同样错误处理)
+        logger.warning(
+            f"主模型 {self.model} 完全空响应,降级到 {self.fallback_model}"
+        )
+        try:
+            resp = self._client.chat.completions.create(
+                model=self.fallback_model,
+                messages=[
+                    {"role": "system", "content": system},
+                    {"role": "user", "content": user},
+                ],
+                temperature=temperature,
+                max_tokens=max_tokens,
+            )
+            return self._extract_content(resp)
+        except Exception as e:
+            raise M3Error(f"主模型 + fallback 都失败: {e}") from e
 
     def stream_chat(
         self,

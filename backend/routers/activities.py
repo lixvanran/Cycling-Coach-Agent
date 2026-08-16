@@ -105,7 +105,12 @@ async def upload_activity(
 
     # 指标计算
     athlete = profile_store.get_or_create_athlete(db)
-    metrics = compute_metrics(activity, ftp=athlete.ftp, max_hr=athlete.max_hr)
+    metrics = compute_metrics(
+        activity,
+        ftp=athlete.ftp,
+        max_hr=athlete.max_hr,
+        lthr=athlete.lthr,
+    )
 
     # 入库
     db_activity = Activity(
@@ -157,10 +162,18 @@ def _run_analyze(activity_id: int, focus: str | None) -> None:
         a = db.query(Activity).get(activity_id)
         if a:
             if result["ok"]:
-                a.report = result["report"]
-                a.report_status = "done"
+                report = result.get("report") or ""
+                a.report = report
+                a.report_status = "done" if report.strip() else "failed"
+                logger.info(
+                    f"活动 {activity_id} 报告生成: status={a.report_status}, "
+                    f"len={len(report)}"
+                )
             else:
                 a.report_status = "failed"
+                logger.warning(
+                    f"活动 {activity_id} 报告生成失败: {result.get('reason')}"
+                )
             db.commit()
             logger.info(f"活动 {activity_id} 报告状态: {a.report_status}")
     finally:

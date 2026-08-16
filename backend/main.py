@@ -44,7 +44,7 @@ async def lifespan(app: FastAPI):
 app = FastAPI(
     title="Cycling Coach API",
     description="公路自行车 AI 教练 · 后端",
-    version="0.1.0",
+    version="0.1.2",
     lifespan=lifespan,
 )
 

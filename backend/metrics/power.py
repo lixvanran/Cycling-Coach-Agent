@@ -104,3 +104,35 @@ def w_prime_balance(
             # 恢复(指数)
             bal[i] = w_prime - (w_prime - bal[i - 1]) * math.exp(-1.0 / tau)
     return bal.tolist()
+
+
+def power_zones(activity: Activity, ftp: int) -> dict[str, int]:
+    """功率区间累计时间(秒)— Coggan 7 区标准
+
+    区间(基于 FTP 百分比):
+      Z1: <55%   Active Recovery
+      Z2: 55-75% Endurance
+      Z3: 76-90% Tempo
+      Z4: 91-105% Threshold
+      Z5: 106-120% VO2 Max
+      Z6: 121-150% Anaerobic
+      Z7: >150%  Neuromuscular
+
+    返回 {"Z1": seconds, "Z2": seconds, ..., "Z7": seconds}
+    """
+    if not ftp or ftp <= 0:
+        return {}
+    pwrs = [s.power for s in activity.samples if s.power is not None]
+    if not pwrs:
+        return {}
+    arr = np.array(pwrs, dtype=float)
+    pct = arr / ftp
+    # Coggan 7 区边界
+    bins = [-np.inf, 0.55, 0.75, 0.90, 1.05, 1.20, 1.50, np.inf]
+    labels = ["Z1", "Z2", "Z3", "Z4", "Z5", "Z6", "Z7"]
+    result: dict[str, int] = {label: 0 for label in labels}
+    for i, label in enumerate(labels):
+        lo, hi = bins[i], bins[i + 1]
+        mask = (pct >= lo) & (pct < hi)
+        result[label] = int(mask.sum())
+    return result

@@ -15,9 +15,10 @@ router = APIRouter(prefix="/api", tags=["diagnose"])
 @router.get("/diagnose")
 def diagnose():
     """诊断信息(给前端 / 健康检查用)"""
+    from ..main import app
     return {
         "ok": True,
-        "version": "0.1.0",
+        "version": app.version,
         "m3_mock_mode": settings.is_mock,
         "m3_model": settings.m3_model,
         "python": sys.version.split()[0],

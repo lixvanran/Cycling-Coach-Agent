@@ -192,7 +192,12 @@ def generate_mock_activity(
         samples=samples,
         laps=laps,
     )
-    metrics = compute_metrics(pa, ftp=ftp, max_hr=athlete.max_hr)
+    metrics = compute_metrics(
+        pa,
+        ftp=ftp,
+        max_hr=athlete.max_hr,
+        lthr=athlete.lthr,
+    )
 
     db_act = Activity(
         athlete_id=athlete.id,

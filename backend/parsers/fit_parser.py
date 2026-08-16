@@ -39,6 +39,20 @@ def _to_float(v) -> float | None:
         return None
 
 
+def _gv(msg, name, default=None):
+    """安全的 msg.get_value — fitparse 1.2.0 不接受 default 参数,这里统一处理
+
+    用法:`_gv(msg, 'manufacturer', '')` 等价于旧版 `msg.get_value('manufacturer', '')`
+    """
+    try:
+        v = msg.get_value(name)
+        if v is None:
+            return default
+        return v if v else default
+    except (KeyError, AttributeError, TypeError):
+        return default
+
+
 def _normalize_dt(dt: datetime | None) -> datetime | None:
     """FIT 时间戳是 UTC,转成带时区的本地时间"""
     if dt is None:
@@ -132,9 +146,10 @@ class FitParser:
 
         # 4) Device info
         for msg in fitfile.get_messages("device_info"):
+            # fitparse 1.2.0: get_value 不接受 default 参数,用 _gv helper
             device = (
-                f"{msg.get_value('manufacturer', '')} {msg.get_value('product_name', '')}".strip()
-                or msg.get_value("serial_number")
+                f"{_gv(msg, 'manufacturer', '')} {_gv(msg, 'product_name', '')}".strip()
+                or _gv(msg, "serial_number")
             )
             if device:
                 break

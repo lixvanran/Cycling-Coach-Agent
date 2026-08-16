@@ -43,6 +43,7 @@ export interface ActivityMetrics {
   efficiency_factor: number | null;
   variability_index: number | null;
   power_curve: Record<string, number>;
+  power_zones: Record<string, number>;
   hr_zones: Record<string, number>;
   hr_drift: number | null;
   cadence_zones: Record<string, number>;

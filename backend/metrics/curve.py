@@ -54,16 +54,21 @@ def estimate_ftp(activity: Activity) -> Optional[int]:
 
 
 def cadence_zones(activity: Activity) -> dict[str, int]:
-    """踏频区间时间分布(秒)
+    """踏频区间时间分布(秒)— 4 区训练学标准
 
-    优化踏频通常在 85-100rpm(平路)/ 70-80rpm(爬坡)
+      <60:    极慢(可能掉链 / 上大坡)
+      60-79:  低踏频(爬坡)
+      80-94:  优化区(平路经济踏频)
+      ≥95:    高踏频(冲刺 / 摇车)
+
+    训练学建议:平路 80-94 rpm 最经济;爬坡 70-80 rpm
     """
     cads = [s.cadence for s in activity.samples if s.cadence is not None]
     if not cads:
         return {}
     arr = np.array(cads)
-    bins = [0, 60, 75, 85, 95, 105, 200]
-    labels = ["<60", "60-75", "75-85", "85-95", "95-105", ">105"]
+    bins = [-np.inf, 60, 80, 95, np.inf]
+    labels = ["<60", "60-79", "80-94", "≥95"]
     return {
         label: int(((arr >= lo) & (arr < hi)).sum())
         for label, lo, hi in zip(labels, bins[:-1], bins[1:])
