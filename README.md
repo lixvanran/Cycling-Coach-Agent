@@ -2,13 +2,30 @@
 
 > 把公路车训练从"经验"升级为"数据 + 智能"。
 
-![Version](https://img.shields.io/badge/version-v0.1.0-blue.svg)
+![Version](https://img.shields.io/badge/version-v0.1.2-blue.svg)
 ![Status](https://img.shields.io/badge/status-MVP-yellow.svg)
 ![Python](https://img.shields.io/badge/python-3.11%2B-blue)
 ![React](https://img.shields.io/badge/react-18-61dafb)
+![License: Code](https://img.shields.io/badge/code%20license-PolyForm%20NC%201.0.0-8B9690)
+![License: Content](https://img.shields.io/badge/content%20license-CC%20BY--NC--ND%204.0-orange)
 
 
-## v0.1.0 — 已实现
+## v0.1.2 — 已实现
+
+### V0.1.1 → V0.1.2 升级要点
+
+- 🐛 **修 FIT 解析崩溃** — fitparse 1.2.0 的 `get_value()` 不接受 default 参数,改用 `_gv()` helper 统一处理(原 136 行 `get_value('manufacturer', '')` 报 TypeError)
+- 🐛 **修 AI 报告失败** — `chat()` 之前没 fallback,主模型 minimax-m3 空响应会直接返回空报告,导致"已生成但内容空"。现在主模型空自动降级到 minimax-m2.7,跟 `stream_chat()` 行为一致
+
+### V0.1.0 → V0.1.1 升级要点
+
+- 🆕 **功率区间(Coggan 7 区)** — 之前完全缺失,现在按 Z1-Z7 标准分区
+- 🆕 **心率区间自动选 LTHR 7 区(Karvonen)** — 之前是 5 区,不够专业;有 LTHR 自动升级
+- 🆕 **训练图加踏频线** — 之前漏画,现在功率/心率/踏频/海拔 4 条线,legend 可点切换
+- 🆕 **训练详情页对齐 TP 布局** — 重新组织 7 个 section,加了间歇表 / 功率区间
+- 🔧 **AI 报告修复** — 加日志,空报告自动标记 failed,前端空报告兜底显示
+- 🔧 **计算方法核对** — NP/IF/TSS/EF/VI/MMP 全部对齐标准,加 13 个单元测试
+- 🔧 **踏频区间改 4 区** — 训练学标准(<60 / 60-79 / 80-94 / ≥95)
 
 ### 后端 (Python + FastAPI)
 - [x] **FIT 文件解析** — `fitparse` + 1Hz 样本入库
@@ -211,3 +228,21 @@ kill -9 <pid>
 
 - 数据格式:Garmin FIT SDK
 
+## License
+
+本项目采用**双重许可**:
+
+| 类别 | 协议 | 范围 |
+|------|------|------|
+| **代码** | [PolyForm Noncommercial 1.0.0](LICENSE) | 全部源代码、脚本、配置、文档 |
+| **知识库** | [CC BY-NC-ND 4.0 + AI 训练禁令](LICENSE-CONTENT) | `backend/knowledge_base/` 下所有内容 |
+
+**简单说**:
+- ✅ 个人学习、修改、Fork 自己的版本 — 欢迎
+- ✅ 非营利组织、教育机构使用 — 欢迎
+- ❌ 商业使用(售卖、SaaS、企业内训、收费咨询)— **禁止**
+- ❌ 用知识库内容训练第三方 AI — **禁止**
+- ❌ 在派生作品中隐瞒来源 / 改作者署名 — **禁止**
+
+完整条款见 `LICENSE`、`LICENSE-CONTENT`、`NOTICE`。
+贡献条款见 `CONTRIBUTING.md`。
