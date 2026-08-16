@@ -6,8 +6,7 @@
 ![Status](https://img.shields.io/badge/status-MVP-yellow.svg)
 ![Python](https://img.shields.io/badge/python-3.11%2B-blue)
 ![React](https://img.shields.io/badge/react-18-61dafb)
-![License: Code](https://img.shields.io/badge/code%20license-PolyForm%20NC%201.0.0-8B9690)
-![License: Content](https://img.shields.io/badge/content%20license-CC%20BY--NC--ND%204.0-orange)
+![License: MIT](https://img.shields.io/badge/license-MIT-green)
 
 
 ## v0.1.2 — 已实现
@@ -230,19 +229,4 @@ kill -9 <pid>
 
 ## License
 
-本项目采用**双重许可**:
-
-| 类别 | 协议 | 范围 |
-|------|------|------|
-| **代码** | [PolyForm Noncommercial 1.0.0](LICENSE) | 全部源代码、脚本、配置、文档 |
-| **知识库** | [CC BY-NC-ND 4.0 + AI 训练禁令](LICENSE-CONTENT) | `backend/knowledge_base/` 下所有内容 |
-
-**简单说**:
-- ✅ 个人学习、修改、Fork 自己的版本 — 欢迎
-- ✅ 非营利组织、教育机构使用 — 欢迎
-- ❌ 商业使用(售卖、SaaS、企业内训、收费咨询)— **禁止**
-- ❌ 用知识库内容训练第三方 AI — **禁止**
-- ❌ 在派生作品中隐瞒来源 / 改作者署名 — **禁止**
-
-完整条款见 `LICENSE`、`LICENSE-CONTENT`、`NOTICE`。
-贡献条款见 `CONTRIBUTING.md`。
+MIT
